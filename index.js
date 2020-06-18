@@ -149,7 +149,7 @@ async function analizar() {
 
             codigo = codigo.replace(/^\s/, '');
             
-            comparar = codigo.match(/^[\w$_["!#%,&?'¡¿*΅~^`<>|°¬]+/)[0];
+            comparar = codigo.match(/^[\w$_”["!#%,&?'¡¿*΅~^`<>|°¬]+/)[0];
             codigo = codigo.replace(comparar, '');
             
             await generarToken(comparar, 'identificador', linea, true);
@@ -157,13 +157,16 @@ async function analizar() {
             
             comparar = codigo.match(/^./)[0];
             codigo = codigo.replace(comparar, '');
-
+            console.log(comparar);
+            console.log(codigo);
+            
             if(comparar === '(') {
                 await generarToken("(", 'delimitadores', linea);
             } else {
                 await generarToken('', 'delimitadores', linea);
             }
-
+            console.log(codigo);
+            
             while(codigo.match(/[\w$_(){}["!#%&\/?='¡¿*΅~^`<>|°¬,;-]+/) && codigo.length > 1){
                 
                 comparar = codigo.match(/^[\w$_["!#%&\/?'¡¿*΅~^`<>|°¬]+/)[0];
