@@ -3,7 +3,7 @@ var tokensTxt = [];
 var tokens = [];
 var errores = [];
 var codigoUsuario = [];
-var variableRegEx = /^[a-zA-Z][\w$]*/;
+var variableRegEx = /^[a-zA-Z]|[[\w$]+]$/;
 var numerosRegEx = /[\d]*[.]*[\d]*/;
 var aritmeticosRegEx = /^[+-\/\*]/
 var mensajesError = {
@@ -152,24 +152,21 @@ async function analizar() {
             comparar = codigo.match(/^[\w$_”["!#%,&?'¡¿*΅~^`<>|°¬]+/)[0];
             codigo = codigo.replace(comparar, '');
             
-            if(comparar.match(/^[\w][\w$]*/)){
+            if(comparar.match(variableRegEx)){
                 await generarToken(comparar, 'identificador', linea, true);
             } else {
-                await generarToken(comparar, 'identificador', linea, false);
+                await generarToken(comparar, 'identificador', linea);
             }
 
             
             comparar = codigo.match(/^./)[0];
             codigo = codigo.replace(comparar, '');
-            console.log(comparar);
-            console.log(codigo);
             
             if(comparar === '(') {
                 await generarToken("(", 'delimitadores', linea);
             } else {
                 await generarToken('', 'delimitadores', linea);
             }
-            console.log(codigo);
             
             while(codigo.match(/[\w$_(){}["!#%&\/?='¡¿*΅~^`<>|°¬,;-]+/) && codigo.length > 1){
                 
@@ -277,11 +274,10 @@ async function generarToken(lexema, codigo, linea, aceptar) {
     
     const existe = await verificarExistenciaToken(lexema);
 
-    opcion.contador++;
-
     if(existe !== false) {
         tokensTxt.push(tokens[existe].token);
     }else{
+        opcion.contador++;
         if(opcion.opciones.indexOf(lexema) !== -1 || aceptar === true){
             tokenNuevo = {
                 linea: linea,
