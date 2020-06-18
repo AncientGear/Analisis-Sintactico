@@ -69,13 +69,17 @@ async function analizar() {
         }
     }
     this.tokensTxt = [];
+    console.log(document.getElementById('codigo').value);
     
     codigoUsuario = document.getElementById('codigo').value;
     codigoUsuario = codigoUsuario.split('\n').filter(Boolean);
+    console.log(codigoUsuario);
     
     let linea = 1;
     
     for(let i = 0; i < codigoUsuario.length; i++){
+        console.log(codigoUsuario);
+        
         let codigo = codigoUsuario.shift();
         let comparar = '';
         
@@ -206,7 +210,11 @@ async function analizar() {
             }
             
         } else if(codigo.length === 1) {
-            comparar = codigo.match(/^./)[0] || codigo.match(/^./)[0];
+            comparar = codigo.match(/^./)[0];
+            console.log(comparar);
+            console.log('codigo' + codigo);
+            codigo = codigo.replace(comparar, '');
+            
             if(comparar === '{' || comparar === '}') {
                 await generarToken(comparar, 'delimitadores', linea);
             } else{
@@ -266,6 +274,7 @@ function generarTablaErrores() {
 async function generarToken(lexema, codigo, linea, aceptar) {
     
     const opcion = tokensPosibles[`${codigo}`];
+    console.log(opcion);
     
     let tokenNuevo = {};
     if(aceptar === undefined) {
