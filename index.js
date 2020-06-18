@@ -152,7 +152,11 @@ async function analizar() {
             comparar = codigo.match(/^[\w$_”["!#%,&?'¡¿*΅~^`<>|°¬]+/)[0];
             codigo = codigo.replace(comparar, '');
             
-            await generarToken(comparar, 'identificador', linea, true);
+            if(comparar.match(/^[\w][\w$]*/)){
+                await generarToken(comparar, 'identificador', linea, true);
+            } else {
+                await generarToken(comparar, 'identificador', linea, false);
+            }
 
             
             comparar = codigo.match(/^./)[0];
