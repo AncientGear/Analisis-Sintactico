@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <p>Analizador Léxico</p>
+    <p>Código de ejemplo:</p>
+    <div id="alinear">
+        <div>
+            <p>Tu código:</p>
+            <div class="codigo">
+                <textarea name="codigo" id="codigo" cols="30" rows="10"></textarea>
+                <button onclick="iniciar()">Analizar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tablaTokens">
+        
+    </div>
+    <p></p>
+    <div class="clearfix"></div>
+    <div id="tablaErrores">
+    </div>
+
+    <a download="tokens.txt" onclick="descargar()" id="descargar">Descargar Archivo de Tokens</a>
+    <script src="index.js"></script>
+</body>
+</html>
